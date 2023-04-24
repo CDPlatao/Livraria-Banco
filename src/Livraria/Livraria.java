@@ -17,8 +17,10 @@ import Services.FactoryServicos;
 import Services.LivroServicos;
 import Services.PedidoServicos;
 import util.Validadores;
+import view.menu;
 
 public class Livraria { // Incio CLASS
+
     public static CCliente CadCliente = new CCliente();
     public static CEditora CadEditora = new CEditora();
     public static CLivro CadLivro = new CLivro();
@@ -87,7 +89,7 @@ public class Livraria { // Incio CLASS
         System.out.println("+-----------------------------------------+");
         System.out.print(" Escolha uma opção: ");
     }// Fim SUBMENU
-     // Fim MENUS
+    // Fim MENUS
 
     // Inicio CLIENTE
     public static void cadastrarCliente() {// Inicio CADCLIENTE
@@ -189,8 +191,9 @@ public class Livraria { // Incio CLASS
             } else {
                 System.out.println("Cliente não consta na base de dados.");
             }
-        } else
+        } else {
             System.out.println("CPF Inválido!.");
+        }
     }// Fim DELCLIENTE
 
     public static void listarCliente() {// Inicio LISTACLIENTE
@@ -203,7 +206,7 @@ public class Livraria { // Incio CLASS
             System.out.println("Endereço: " + cli.getEndereco());
         }
     }// Fim LISTACLIENTE
-     // Fim CLIENTE
+    // Fim CLIENTE
 
     // Inicio EDITORA
     public static void cadastrarEditora() {// Inicio CADEDITORA
@@ -311,8 +314,9 @@ public class Livraria { // Incio CLASS
             } else {
                 System.out.println("Editora não consta na base de dados.");
             }
-        } else
+        } else {
             System.out.println("CNPJ Inválido!.");
+        }
     }// Fim DELEDITORA
 
     public static void listarEditora() {// Inicio LISTAEDITORA
@@ -326,7 +330,7 @@ public class Livraria { // Incio CLASS
             System.out.println("Gerente: " + edi.getGerente());
         }
     }// Fim LISTAEDITORA
-     // Fim EDITORA
+    // Fim EDITORA
 
     // Inicio LIVRO
     public static void cadastrarLivro() {// Inicio CADLIVRO
@@ -459,10 +463,10 @@ public class Livraria { // Incio CLASS
             System.out.println("Editora: " + livro.getIdEditora().getnomeEditora() + "\n");
         }
     }// Fim LISTALIVRO
-     // Fim LIVRO
+    // Fim LIVRO
 
     // Inicio VENDALIVRO
-    public static void VendaLivro() {    
+    public static void VendaLivro() {
         PedidoServicos pedidoS = FactoryServicos.getPedidoServicos();
         Cliente cliente = solicitaCliente();
         ArrayList<Livro> livros = solicitaLivros();
@@ -532,11 +536,10 @@ public class Livraria { // Incio CLASS
 
     // Inicio MAIN
     public static void main(String[] args) {// Inicio VOID
-        CadCliente.mockClientes();
-        CadEditora.mockEditora();
-        CadLivro.mockLivros();
-        CadVendaLivro.mockVendaLivros();
-        int opM;
+        menu jMenu = new menu();
+        jMenu.setVisible(true);
+
+        /* int opM;
         do {
             MenuP();
             opM = lerNum();
@@ -617,6 +620,7 @@ public class Livraria { // Incio CLASS
                     break;
             }
         } while (opM != 0);// Sistema
+         */
     }// Fim VOID
 } // Fim MAIN
   // Fim CLASS

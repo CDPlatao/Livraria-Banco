@@ -1,13 +1,17 @@
 package view;
 
-import DAO.ClienteDAO;
+import Model.Cliente;
+import Services.ClienteServicos;
+import Services.FactoryServicos;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import util.Validadores;
 
 public class JFCliente extends javax.swing.JFrame {
 
     public JFCliente() {
         initComponents();
+        addRowToTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -34,6 +38,9 @@ public class JFCliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cliente");
+        setMaximizedBounds(new java.awt.Rectangle(528, 470, 470, 470));
+        setMaximumSize(new java.awt.Dimension(528, 470));
+        setResizable(false);
 
         jFundo.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -43,16 +50,16 @@ public class JFCliente extends javax.swing.JFrame {
         jlTitulo.setToolTipText("");
 
         jlNome.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jlNome.setText("Nome:");
+        jlNome.setText("Nome *  ");
 
         jlCPF.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jlCPF.setText("CPF:");
+        jlCPF.setText("CPF*");
 
         jlEndereco.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jlEndereco.setText("Endereço:");
+        jlEndereco.setText("Endereço *");
 
         jlTelefone.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jlTelefone.setText("Telefone:");
+        jlTelefone.setText("Telefone *");
 
         jtextNome.setToolTipText("Informe o nome completo");
         jtextNome.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -115,7 +122,7 @@ public class JFCliente extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Nome", "CPF", "Endereço", "Telefone"
+                "CPF", "Nome", "Endereço", "Telefone"
             }
         ) {
             Class[] types = new Class [] {
@@ -240,10 +247,13 @@ public class JFCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jtextCPFKeyTyped
 
     private void jtextCPFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtextCPFFocusLost
-        if (!Validadores.isCPF(jtextCPF.getText())) {
-            JOptionPane.showMessageDialog(this, "CPF Inválido!");
-            jtextCPF.requestFocus();
+        if (!jtextCPF.getText().equals("")) {
+            if (!Validadores.isCPF(jtextCPF.getText())) {
+                JOptionPane.showMessageDialog(this, "CPF Inválido!");
+                jtextCPF.requestFocus();
+            }
         }
+
     }//GEN-LAST:event_jtextCPFFocusLost
 
     private void jtextNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtextNomeKeyTyped
@@ -273,8 +283,41 @@ public class JFCliente extends javax.swing.JFrame {
         jbLimpar.setEnabled(false);
         jbEditar.setEnabled(true);
         jbSalvar.setText("Confirmar");
-        
+
     }//GEN-LAST:event_jtClientesMouseClicked
+
+    public void validaInput() {
+        if (jtextCPF.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preencher CPF!");
+            jtextCPF.requestFocus();
+        }
+        if (jtextNome.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preencher Nome!");
+            jtextNome.requestFocus();
+        }
+        if (jtextEndereco.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preencher Endereço!");
+            jtextEndereco.requestFocus();
+        } else if (jformTelefone.getText() == null) {
+            JOptionPane.showMessageDialog(this, "Preencher telefone!");
+            jformTelefone.requestFocus();
+        }
+    }
+
+    public void addRowToTable() {
+        DefaultTableModel model = (DefaultTableModel) jtClientes.getModel();
+        model.getDataVector().removeAllElements();// Remove todas as linhas
+        model.fireTableDataChanged();
+        Object rowData[] = new Object[4];
+        ClienteServicos clienteS = FactoryServicos.getClienteServicos();
+        for (Cliente cliente : clienteS.getClientes()) {
+            rowData[0] = Validadores.imprimeCPF(cliente.getCpf());
+            rowData[1] = cliente.getNomeCliente();
+            rowData[2] = cliente.getEndereco();
+            rowData[3] = cliente.getTelefone();
+            model.addRow(rowData);
+        }
+    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

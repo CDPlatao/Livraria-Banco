@@ -4,9 +4,11 @@ import javax.swing.JOptionPane;
 import util.Validadores;
 
 public class JFEditora extends javax.swing.JFrame {
+
     public JFEditora() {
         initComponents();
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -33,7 +35,10 @@ public class JFEditora extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Editora");
-        setPreferredSize(new java.awt.Dimension(536, 463));
+        setMaximizedBounds(new java.awt.Rectangle(536, 530, 530, 530));
+        setMaximumSize(new java.awt.Dimension(536, 530));
+        setPreferredSize(new java.awt.Dimension(536, 530));
+        setResizable(false);
 
         jFundo.setBackground(new java.awt.Color(204, 204, 204));
         jFundo.setPreferredSize(new java.awt.Dimension(532, 463));
@@ -46,19 +51,19 @@ public class JFEditora extends javax.swing.JFrame {
         jlEditora.setPreferredSize(new java.awt.Dimension(198, 26));
 
         jlNome.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jlNome.setText("Nome:");
+        jlNome.setText("Nome *");
 
         jlCnpj.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jlCnpj.setText("CNPJ:");
+        jlCnpj.setText("CNPJ *");
 
         jlEndereco.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jlEndereco.setText("Endereço:");
+        jlEndereco.setText("Endereço *");
 
         jlTelefone.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jlTelefone.setText("Telefone:");
+        jlTelefone.setText("Telefone *");
 
         jlGerente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jlGerente.setText("Gerente:");
+        jlGerente.setText("Gerente *");
 
         jtextNome.setToolTipText("Informe o nome completo");
         jtextNome.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -189,16 +194,16 @@ public class JFEditora extends javax.swing.JFrame {
                             .addComponent(jtextCnpj, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
             .addGroup(jFundoLayout.createSequentialGroup()
-                .addGap(165, 165, 165)
-                .addComponent(jlEditora, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(149, 149, 149)
+                .addComponent(jlEditora, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jFundoLayout.setVerticalGroup(
             jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jFundoLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(13, 13, 13)
                 .addComponent(jlEditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparador, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19)
                 .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -235,20 +240,22 @@ public class JFEditora extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jFundo, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+            .addComponent(jFundo, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jFundo, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jFundo, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtextCnpjFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtextCnpjFocusLost
-        if (!Validadores.isCNPJ(jtextCnpj.getText())) {
-            JOptionPane.showMessageDialog(this, "Cnpj Inválido!");
-            jtextCnpj.requestFocus();
+        if (!jtextCnpj.getText().equals("")) {
+            if (!Validadores.isCNPJ(jtextCnpj.getText())) {
+                JOptionPane.showMessageDialog(this, "Cnpj Inválido!");
+                jtextCnpj.requestFocus();
+            }
         }
     }//GEN-LAST:event_jtextCnpjFocusLost
 
@@ -305,6 +312,28 @@ public class JFEditora extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jtEditorasMouseClicked
 
+    public void validaInput() {
+        if (jtextCnpj.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preencher Cnpj!");
+            jtextCnpj.requestFocus();
+        }
+        if (jtextNome.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preencher Nome!");
+            jtextNome.requestFocus();
+        }
+        if (jtextEndereco.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preencher Endereço!");
+            jtextEndereco.requestFocus();
+        }
+        if (jtextGerente.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preencher Gerente!");
+            jtextGerente.requestFocus();
+        }
+        if (jformTelefone.getText().length() < 14) {
+            JOptionPane.showMessageDialog(this, "Preencher telefone!");
+            jformTelefone.requestFocus();
+        }
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
