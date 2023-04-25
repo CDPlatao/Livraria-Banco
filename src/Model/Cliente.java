@@ -20,7 +20,7 @@ public class Cliente {
         this.cnpj = cnpj;
         this.endereco = endereco;
         this.telefone = telefone;
-    }
+    }   
 
     public int getIdCliente() {
         return idCliente;

@@ -12,6 +12,8 @@ public class JFCliente extends javax.swing.JFrame {
     public JFCliente() {
         initComponents();
         addRowToTable();
+        jbDeletar.setVisible(false);
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -20,7 +22,7 @@ public class JFCliente extends javax.swing.JFrame {
 
         jFundo = new javax.swing.JPanel();
         jlTitulo = new javax.swing.JLabel();
-        jlBarra = new javax.swing.JSeparator();
+        jBarra = new javax.swing.JSeparator();
         jlNome = new javax.swing.JLabel();
         jlCPF = new javax.swing.JLabel();
         jlEndereco = new javax.swing.JLabel();
@@ -29,10 +31,12 @@ public class JFCliente extends javax.swing.JFrame {
         jtextCPF = new javax.swing.JTextField();
         jtextEndereco = new javax.swing.JTextField();
         jformTelefone = new javax.swing.JFormattedTextField();
+        jbDeletar = new javax.swing.JButton();
         jbSalvar = new javax.swing.JButton();
         jbEditar = new javax.swing.JButton();
         jbLimpar = new javax.swing.JButton();
-        jbCancelar = new javax.swing.JButton();
+        jbFechar = new javax.swing.JButton();
+        jBarra2 = new javax.swing.JSeparator();
         Tabela = new javax.swing.JScrollPane();
         jtClientes = new javax.swing.JTable();
 
@@ -89,6 +93,13 @@ public class JFCliente extends javax.swing.JFrame {
         }
         jformTelefone.setToolTipText("Informe somente números");
 
+        jbDeletar.setText("Deletar");
+        jbDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbDeletarActionPerformed(evt);
+            }
+        });
+
         jbSalvar.setText("Salvar");
         jbSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,10 +121,10 @@ public class JFCliente extends javax.swing.JFrame {
             }
         });
 
-        jbCancelar.setText("Cancelar");
-        jbCancelar.addActionListener(new java.awt.event.ActionListener() {
+        jbFechar.setText("Fechar");
+        jbFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbCancelarActionPerformed(evt);
+                jbFecharActionPerformed(evt);
             }
         });
 
@@ -151,70 +162,82 @@ public class JFCliente extends javax.swing.JFrame {
         jFundo.setLayout(jFundoLayout);
         jFundoLayout.setHorizontalGroup(
             jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jBarra)
             .addGroup(jFundoLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Tabela)
+                    .addComponent(Tabela, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
                     .addGroup(jFundoLayout.createSequentialGroup()
+                        .addGap(4, 4, 4)
                         .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlNome)
-                            .addComponent(jlEndereco)
-                            .addComponent(jlTelefone)
-                            .addComponent(jlCPF))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtextEndereco)
-                            .addComponent(jtextNome, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jtextCPF, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jformTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)))
-                    .addGroup(jFundoLayout.createSequentialGroup()
-                        .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jbEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jbLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFundoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jlTitulo)
-                .addGap(169, 169, 169))
-            .addComponent(jlBarra)
+                            .addGroup(jFundoLayout.createSequentialGroup()
+                                .addComponent(jlCPF)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jFundoLayout.createSequentialGroup()
+                                .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlEndereco)
+                                    .addComponent(jlTelefone))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jFundoLayout.createSequentialGroup()
+                                        .addComponent(jtextCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jlNome)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jtextNome))
+                                    .addComponent(jtextEndereco)
+                                    .addComponent(jformTelefone, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addGroup(jFundoLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jbDeletar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbSalvar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbEditar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbLimpar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbFechar)))))
+                .addGap(15, 15, 15))
+            .addComponent(jBarra2)
+            .addGroup(jFundoLayout.createSequentialGroup()
+                .addGap(122, 122, 122)
+                .addComponent(jlTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jFundoLayout.setVerticalGroup(
             jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jFundoLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jlTitulo)
-                .addGap(10, 10, 10)
-                .addComponent(jlBarra, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19)
+                .addGap(15, 15, 15)
+                .addComponent(jBarra, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
                 .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtextCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlCPF))
-                .addGap(19, 19, 19)
+                    .addComponent(jlCPF)
+                    .addComponent(jlNome)
+                    .addComponent(jtextNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlEndereco)
+                    .addComponent(jtextEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
                 .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtextNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlNome))
-                .addGap(19, 19, 19)
-                .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtextEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlEndereco))
-                .addGap(19, 19, 19)
-                .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlTelefone)
-                    .addComponent(jformTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
+                    .addComponent(jformTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlTelefone))
+                .addGap(20, 20, 20)
                 .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbSalvar)
                     .addComponent(jbEditar)
                     .addComponent(jbLimpar)
-                    .addComponent(jbCancelar))
-                .addGap(19, 19, 19)
+                    .addComponent(jbFechar)
+                    .addComponent(jbDeletar))
+                .addGap(20, 20, 20)
+                .addComponent(jBarra2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addComponent(Tabela, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-                .addGap(10, 10, 10))
+                .addGap(15, 15, 15))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -232,7 +255,20 @@ public class JFCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
+        if (validaInput()) {
+            int idCliente = 0;
+            String nome = jtextNome.getText();
+            String cpf = jtextCPF.getText();
+            String cnpj = null;
+            String endereco = jtextEndereco.getText();
+            String telefone = jformTelefone.getText();
+            ClienteServicos clienteS = FactoryServicos.getClienteServicos();
 
+            Cliente c = new Cliente(idCliente, nome, cpf, cnpj, endereco, telefone);
+            clienteS.cadCliente(c);
+            limparCampo();
+            addRowToTable();
+        }
     }//GEN-LAST:event_jbSalvarActionPerformed
 
     private void jtextCPFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtextCPFKeyTyped
@@ -264,44 +300,79 @@ public class JFCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jtextNomeKeyTyped
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
-        // TODO add your handling code here:
+        jtextCPF.setEnabled(false);
+        jbSalvar.setText("Confirmar");
+        jbFechar.setText("Cancelar");
     }//GEN-LAST:event_jbEditarActionPerformed
 
     private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed
+        if (jbLimpar.getText().equals("Limpar")) {
+            limparCampo();
+        } else {
+            limparCampo();
+            jbLimpar.setText("Limpar");
+            jbSalvar.setText("Salvar");
+            jbEditar.setEnabled(false);
+            jtextCPF.setEnabled(true);
+        }
+    }//GEN-LAST:event_jbLimparActionPerformed
+
+    public void limparCampo() {
         jtextNome.setText("");
         jtextCPF.setText("");
         jtextEndereco.setText("");
         jformTelefone.setText("");
         jtextNome.requestFocus();
-    }//GEN-LAST:event_jbLimparActionPerformed
+    }
 
-    private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
+    private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jbCancelarActionPerformed
+    }//GEN-LAST:event_jbFecharActionPerformed
 
     private void jtClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtClientesMouseClicked
-        jbLimpar.setEnabled(false);
         jbEditar.setEnabled(true);
-        jbSalvar.setText("Confirmar");
-
+        jbDeletar.setVisible(true);
     }//GEN-LAST:event_jtClientesMouseClicked
 
-    public void validaInput() {
+    private void jbDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeletarActionPerformed
+        int linha;
+        String cpf;
+        linha = jtClientes.getSelectedRow();
+        cpf = (String) jtClientes.getValueAt(linha, 0);
+        ClienteServicos clienteS = FactoryServicos.getClienteServicos();
+        Object[] rep = {"Sim", "Não"};
+        int resposta = JOptionPane.showOptionDialog(this, "Deseja realmente deletar este CPF ?", "Deletar", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, rep, rep[0]);
+        if (resposta == 0) {
+            clienteS.delCliente(cpf);
+            addRowToTable();
+            JOptionPane.showMessageDialog(this, "Cliente deletado com sucesso!.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Opção cancelada!.");
+        }
+        jbDeletar.setVisible(false);
+    }//GEN-LAST:event_jbDeletarActionPerformed
+
+    public boolean validaInput() {
         if (jtextCPF.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Preencher CPF!");
             jtextCPF.requestFocus();
+            return false;
         }
         if (jtextNome.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Preencher Nome!");
             jtextNome.requestFocus();
+            return false;
         }
         if (jtextEndereco.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Preencher Endereço!");
             jtextEndereco.requestFocus();
+            return false;
         } else if (jformTelefone.getText() == null) {
             JOptionPane.showMessageDialog(this, "Preencher telefone!");
             jformTelefone.requestFocus();
+            return false;
         }
+        return true;
     }
 
     public void addRowToTable() {
@@ -311,7 +382,7 @@ public class JFCliente extends javax.swing.JFrame {
         Object rowData[] = new Object[4];
         ClienteServicos clienteS = FactoryServicos.getClienteServicos();
         for (Cliente cliente : clienteS.getClientes()) {
-            rowData[0] = Validadores.imprimeCPF(cliente.getCpf());
+            rowData[0] = cliente.getCpf();
             rowData[1] = cliente.getNomeCliente();
             rowData[2] = cliente.getEndereco();
             rowData[3] = cliente.getTelefone();
@@ -357,13 +428,15 @@ public class JFCliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane Tabela;
+    private javax.swing.JSeparator jBarra;
+    private javax.swing.JSeparator jBarra2;
     private javax.swing.JPanel jFundo;
-    private javax.swing.JButton jbCancelar;
+    private javax.swing.JButton jbDeletar;
     private javax.swing.JButton jbEditar;
+    private javax.swing.JButton jbFechar;
     private javax.swing.JButton jbLimpar;
     private javax.swing.JButton jbSalvar;
     private javax.swing.JFormattedTextField jformTelefone;
-    private javax.swing.JSeparator jlBarra;
     private javax.swing.JLabel jlCPF;
     private javax.swing.JLabel jlEndereco;
     private javax.swing.JLabel jlNome;

@@ -1,5 +1,9 @@
 package view;
 
+import Model.Livro;
+import Services.EditoraServicos;
+import Services.FactoryServicos;
+import Services.LivroServicos;
 import javax.swing.JOptionPane;
 import util.Validadores;
 
@@ -7,6 +11,9 @@ public class JFLivro extends javax.swing.JFrame {
 
     public JFLivro() {
         initComponents();
+        /*addRowToTable();*/
+        jbDeletar.setVisible(false);
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -14,7 +21,7 @@ public class JFLivro extends javax.swing.JFrame {
     private void initComponents() {
 
         jFundo = new javax.swing.JPanel();
-        jSeparador = new javax.swing.JSeparator();
+        jBarra = new javax.swing.JSeparator();
         jlLivros = new javax.swing.JLabel();
         jlIsbn = new javax.swing.JLabel();
         jlCnpj = new javax.swing.JLabel();
@@ -27,21 +34,23 @@ public class JFLivro extends javax.swing.JFrame {
         jtextCnpj = new javax.swing.JTextField();
         jtextTitulo = new javax.swing.JTextField();
         jtextAutor = new javax.swing.JTextField();
+        jtextAssunto = new javax.swing.JTextField();
         jtextEstoque = new javax.swing.JTextField();
+        jformPreco = new javax.swing.JFormattedTextField();
+        jbDeletar = new javax.swing.JButton();
         jbSalvar = new javax.swing.JButton();
         jbEditar = new javax.swing.JButton();
         jbLimpar = new javax.swing.JButton();
-        jbCancelar = new javax.swing.JButton();
+        jbFechar = new javax.swing.JButton();
+        jBarra2 = new javax.swing.JSeparator();
         Tabela = new javax.swing.JScrollPane();
         jtLivros = new javax.swing.JTable();
-        jtextAssunto = new javax.swing.JTextField();
-        jformPreco = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Livro");
-        setMaximizedBounds(new java.awt.Rectangle(536, 570, 570, 570));
-        setMaximumSize(new java.awt.Dimension(536, 570));
-        setPreferredSize(new java.awt.Dimension(536, 570));
+        setMaximizedBounds(new java.awt.Rectangle(528, 530, 530, 530));
+        setMaximumSize(new java.awt.Dimension(528, 530));
+        setPreferredSize(new java.awt.Dimension(528, 530));
         setResizable(false);
 
         jFundo.setBackground(new java.awt.Color(204, 204, 204));
@@ -108,7 +117,33 @@ public class JFLivro extends javax.swing.JFrame {
             }
         });
 
+        jtextAssunto.setToolTipText("Informe o nome completo");
+        jtextAssunto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtextAssuntoKeyTyped(evt);
+            }
+        });
+
         jtextEstoque.setToolTipText("Informe o nome completo");
+        jtextEstoque.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtextEstoqueKeyTyped(evt);
+            }
+        });
+
+        jformPreco.setToolTipText("Informe o preço");
+        jformPreco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jformPrecoActionPerformed(evt);
+            }
+        });
+
+        jbDeletar.setText("Deletar");
+        jbDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbDeletarActionPerformed(evt);
+            }
+        });
 
         jbSalvar.setText("Salvar");
         jbSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -131,26 +166,26 @@ public class JFLivro extends javax.swing.JFrame {
             }
         });
 
-        jbCancelar.setText("Cancelar");
-        jbCancelar.addActionListener(new java.awt.event.ActionListener() {
+        jbFechar.setText("Fechar");
+        jbFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbCancelarActionPerformed(evt);
+                jbFecharActionPerformed(evt);
             }
         });
 
         jtLivros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Titulo", "Isbn", "Autor", "Assunto", "Estoque", "Preço"
+                "Isbn", "Cnpj", "Titulo", "Autor", "Assunto", "Estoque", "Preço"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class
+                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -168,117 +203,105 @@ public class JFLivro extends javax.swing.JFrame {
         });
         Tabela.setViewportView(jtLivros);
 
-        jtextAssunto.setToolTipText("Informe o nome completo");
-        jtextAssunto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jtextAssuntoKeyTyped(evt);
-            }
-        });
-
-        jformPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-        jformPreco.setToolTipText("Informe o preço");
-
         javax.swing.GroupLayout jFundoLayout = new javax.swing.GroupLayout(jFundo);
         jFundo.setLayout(jFundoLayout);
         jFundoLayout.setHorizontalGroup(
             jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparador)
+            .addComponent(jBarra)
+            .addComponent(jBarra2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFundoLayout.createSequentialGroup()
+                .addContainerGap(114, Short.MAX_VALUE)
+                .addComponent(jlLivros, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(114, 114, 114))
             .addGroup(jFundoLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Tabela)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFundoLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jbDeletar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbSalvar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbEditar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbLimpar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbFechar))
+                    .addGroup(jFundoLayout.createSequentialGroup()
+                        .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlAutor)
+                            .addComponent(jlEstoque))
+                        .addGap(10, 10, 10)
+                        .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jFundoLayout.createSequentialGroup()
+                                .addComponent(jtextEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jlPreco)
+                                .addGap(18, 18, 18)
+                                .addComponent(jformPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtextAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFundoLayout.createSequentialGroup()
                         .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jlTitulo)
                             .addComponent(jlIsbn))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jFundoLayout.createSequentialGroup()
-                                .addComponent(jtextIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20)
-                                .addComponent(jlCnpj)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jtextCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jtextTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(11, 11, 11))
-                    .addGroup(jFundoLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
                         .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jFundoLayout.createSequentialGroup()
-                                .addComponent(jlAutor)
-                                .addGap(30, 30, 30)
-                                .addComponent(jtextAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jFundoLayout.createSequentialGroup()
-                                .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlEstoque)
-                                    .addComponent(jlAssunto)
-                                    .addComponent(jlPreco))
-                                .addGap(10, 10, 10)
-                                .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jtextEstoque)
-                                    .addComponent(jtextAssunto, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jformPreco, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jFundoLayout.createSequentialGroup()
-                .addGap(162, 162, 162)
-                .addComponent(jlLivros, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jFundoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Tabela)
-                    .addGroup(jFundoLayout.createSequentialGroup()
-                        .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jbEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jbLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                                .addComponent(jtextIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jlCnpj)
+                                .addGap(18, 18, 18)
+                                .addComponent(jtextCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFundoLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
+                                .addComponent(jlAssunto)
+                                .addGap(18, 18, 18)
+                                .addComponent(jtextAssunto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtextTitulo))))
+                .addGap(15, 15, 15))
         );
         jFundoLayout.setVerticalGroup(
             jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jFundoLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jlLivros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jSeparador, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19)
+                .addGap(15, 15, 15)
+                .addComponent(jBarra, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
                 .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtextIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlIsbn)
                     .addComponent(jtextCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlCnpj))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(20, 20, 20)
                 .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlTitulo)
                     .addComponent(jtextTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
+                .addGap(20, 20, 20)
                 .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlAutor)
-                    .addComponent(jtextAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlAssunto)
-                    .addComponent(jtextAssunto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jFundoLayout.createSequentialGroup()
-                        .addComponent(jtextEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19)
-                        .addComponent(jformPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jFundoLayout.createSequentialGroup()
-                        .addComponent(jlEstoque)
-                        .addGap(22, 22, 22)
-                        .addComponent(jlPreco)))
-                .addGap(19, 19, 19)
+                    .addComponent(jtextAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtextAssunto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlAssunto))
+                .addGap(20, 20, 20)
                 .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbSalvar)
-                    .addComponent(jbEditar)
+                    .addComponent(jtextEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlEstoque)
+                    .addComponent(jformPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlPreco))
+                .addGap(20, 20, 20)
+                .addGroup(jFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbFechar)
                     .addComponent(jbLimpar)
-                    .addComponent(jbCancelar))
-                .addGap(19, 19, 19)
+                    .addComponent(jbEditar)
+                    .addComponent(jbSalvar)
+                    .addComponent(jbDeletar))
+                .addGap(20, 20, 20)
+                .addComponent(jBarra2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addComponent(Tabela, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -289,38 +312,70 @@ public class JFLivro extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jFundo, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jFundo, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
+        if (validaInput()) {
+            int idLivro = 0;
+            String titulo = jtextTitulo.getText();
+            String isbn = jtextIsbn.getText();
+            String cnpj = jtextCnpj.getText();
+            String autor = jtextAutor.getText();
+            String assunto = jtextAssunto.getText();
+            String estoque = jtextEstoque.getText();
+            String preco = jformPreco.getText();
+            LivroServicos livroS = FactoryServicos.getLivroServicos();
 
+            /* Livro l = new Livro
+            LivroS.cadLivro(l);
+            limparCampo();
+            addRowToTable();*/
+        }
     }//GEN-LAST:event_jbSalvarActionPerformed
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
-        // TODO add your handling code here:
+        jtextIsbn.setEnabled(false);
+        jtextCnpj.setEnabled(false);
+        jbSalvar.setText("Confirmar");
+        jbFechar.setText("Cancelar");
     }//GEN-LAST:event_jbEditarActionPerformed
 
     private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed
+        if (jbLimpar.getText().equals("Limpar")) {
+            limparCampo();
+        } else {
+            limparCampo();
+            jbLimpar.setText("Limpar");
+            jbSalvar.setText("Salvar");
+            jbEditar.setEnabled(false);
+            jtextIsbn.setEnabled(true);
+            jtextCnpj.setEnabled(true);
+        }
+    }//GEN-LAST:event_jbLimparActionPerformed
+
+    public void limparCampo() {
         jtextTitulo.setText("");
         jtextIsbn.setText("");
         jtextAutor.setText("");
         jtextAssunto.setText("");
         jtextEstoque.setText("");
-        jtextPreco.setText("");
+        jformPreco.setText("");
         jtextIsbn.requestFocus();
-    }//GEN-LAST:event_jbLimparActionPerformed
+    }
 
-    private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
+    private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jbCancelarActionPerformed
+    }//GEN-LAST:event_jbFecharActionPerformed
 
     private void jtLivrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtLivrosMouseClicked
         jbLimpar.setEnabled(false);
         jbEditar.setEnabled(true);
-        jbSalvar.setText("Confirmar");
     }//GEN-LAST:event_jtLivrosMouseClicked
 
     private void jtextIsbnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtextIsbnKeyTyped
@@ -372,23 +427,56 @@ public class JFLivro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtextAssuntoKeyTyped
 
-    public void validaInput() {
+    private void jformPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jformPrecoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jformPrecoActionPerformed
+
+    private void jtextEstoqueKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtextEstoqueKeyTyped
+        String Letras = "\".,ABCDEFGHIJKLMNOPQRSTUVWXYZÇabcdefghijklmnopqrstuvwxyzç<>:?/~^}][{´`=+-_!|'\\'@#$%¨&*()²³£¢¬§º°ª\";";
+        if (Letras.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtextEstoqueKeyTyped
+
+    private void jbDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeletarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbDeletarActionPerformed
+
+    public boolean validaInput() {
         if (jtextCnpj.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Preencher Cnpj!");
             jtextCnpj.requestFocus();
+            return false;
         }
         if (jtextIsbn.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Preencher Isbn!");
             jtextIsbn.requestFocus();
+            return false;
+        }
+        if (jtextTitulo.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preencher Titulo!.");
+            return false;
         }
         if (jtextAutor.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Preencher Autor!");
             jtextAutor.requestFocus();
+            return false;
         }
         if (jtextAssunto.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Preencher Assunto!");
             jtextAssunto.requestFocus();
+            return false;
         }
+        if (jtextEstoque.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preencher Estoque!.");
+            return false;
+        }
+        if (jformPreco.getText() == null) {
+            JOptionPane.showMessageDialog(this, "Preencher preço!.");
+            return false;
+        };
+
+        return true;
     }
 
     public static void main(String args[]) {
@@ -425,10 +513,12 @@ public class JFLivro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane Tabela;
+    private javax.swing.JSeparator jBarra;
+    private javax.swing.JSeparator jBarra2;
     private javax.swing.JPanel jFundo;
-    private javax.swing.JSeparator jSeparador;
-    private javax.swing.JButton jbCancelar;
+    private javax.swing.JButton jbDeletar;
     private javax.swing.JButton jbEditar;
+    private javax.swing.JButton jbFechar;
     private javax.swing.JButton jbLimpar;
     private javax.swing.JButton jbSalvar;
     private javax.swing.JFormattedTextField jformPreco;
