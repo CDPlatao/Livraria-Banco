@@ -255,17 +255,22 @@ public class JFCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
+        ClienteServicos clienteS = FactoryServicos.getClienteServicos();
         if (validaInput()) {
             int idCliente = 0;
             String nome = jtextNome.getText();
             String cpf = jtextCPF.getText();
             String cnpj = null;
             String endereco = jtextEndereco.getText();
-            String telefone = jformTelefone.getText();
-            ClienteServicos clienteS = FactoryServicos.getClienteServicos();
-
+            String telefone = jformTelefone.getText();            
             Cliente c = new Cliente(idCliente, nome, cpf, cnpj, endereco, telefone);
             clienteS.cadCliente(c);
+            
+            if(jbSalvar.getText().equals("Confirmar")){
+                clienteS.attCliente(c);
+            }else{
+                clienteS.cadCliente(c);
+            }
             limparCampo();
             addRowToTable();
         }
@@ -303,6 +308,15 @@ public class JFCliente extends javax.swing.JFrame {
         jtextCPF.setEnabled(false);
         jbSalvar.setText("Confirmar");
         jbFechar.setText("Cancelar");
+
+        int linha;
+        linha = jtClientes.getSelectedRow();
+
+        jtextCPF.setText((String) jtClientes.getValueAt(linha, 0));
+        jtextNome.setText((String) jtClientes.getValueAt(linha, 1));
+        jtextEndereco.setText((String) jtClientes.getValueAt(linha,2));
+        jformTelefone.setText((String) jtClientes.getValueAt(linha, 3));
+        jtextNome.requestFocus();
     }//GEN-LAST:event_jbEditarActionPerformed
 
     private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed

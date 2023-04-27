@@ -107,14 +107,15 @@ public class LivrosDAO {
     public void attLivrobyDoc(Livro lVO) {// Inicio ATT
         Connection con = Conexao.getConexao();
         try {
-            String sql = "update Livros set titulo = ?, autor = ?, assunto = ?, estoque = ?, preco = ?"
+            String sql = "update livros set titulo = ?, autor = ?, assunto = ?, estoque = ?, preco = ?"
                     + "where isbn = ?";
-            PreparedStatement pst = con.prepareStatement(sql);
+            PreparedStatement pst = con.prepareStatement(sql);            
             pst.setString(1, lVO.getTitulo());
             pst.setString(2, lVO.getAutor());
             pst.setString(3, lVO.getAssunto());
             pst.setInt(4, lVO.getEstoque());
             pst.setFloat(5, lVO.getPreco());
+            pst.setString(6,lVO.getIsbn());
             pst.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Erro ao atualizar livro!\n"

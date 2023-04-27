@@ -94,8 +94,8 @@
                                   <Component id="jtextEstoque" min="-2" pref="152" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jlPreco" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jformPreco" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Component id="jtextPreco" min="-2" pref="150" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jtextAutor" min="-2" pref="150" max="-2" attributes="0"/>
                           </Group>
@@ -158,8 +158,8 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jtextEstoque" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jlEstoque" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jformPreco" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jlPreco" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jtextPreco" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -304,12 +304,9 @@
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtextEstoqueKeyTyped"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="jformPreco">
-          <Properties>
-            <Property name="toolTipText" type="java.lang.String" value="Informe o pre&#xe7;o"/>
-          </Properties>
+        <Component class="javax.swing.JTextField" name="jtextPreco">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jformPrecoActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtextPrecoKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jbDeletar">
@@ -366,12 +363,12 @@
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="7" rowCount="1">
                     <Column editable="false" title="Isbn" type="java.lang.String"/>
-                    <Column editable="false" title="Cnpj" type="java.lang.Object"/>
+                    <Column editable="false" title="Editora" type="java.lang.String"/>
                     <Column editable="false" title="Titulo" type="java.lang.String"/>
                     <Column editable="false" title="Autor" type="java.lang.String"/>
                     <Column editable="false" title="Assunto" type="java.lang.String"/>
-                    <Column editable="false" title="Estoque" type="java.lang.Integer"/>
-                    <Column editable="false" title="Pre&#xe7;o" type="java.lang.Float"/>
+                    <Column editable="false" title="Estoque" type="java.lang.String"/>
+                    <Column editable="false" title="Pre&#xe7;o" type="java.lang.String"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
